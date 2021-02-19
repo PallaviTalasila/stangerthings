@@ -1,6 +1,13 @@
 import React from "react";
 
-const Header = () => {
+const Header = ({ username, setUsername, setPassword, setUserToken }) => {
+  const handleClick = (event) => {
+    localStorage.removeItem(`${username}Token`);
+    setUserToken(false);
+    setUsername("");
+    setPassword("");
+  };
+
   return (
     <div>
       <header>
@@ -13,7 +20,9 @@ const Header = () => {
           </a>
           <a href="#posts">Posts</a>
           <a href="#profile">Profile</a>
-          <a href="#logout">Logout</a>
+          <button className="logout" onClick={handleClick}>
+            Logout
+          </button>
         </div>
       </header>
     </div>
