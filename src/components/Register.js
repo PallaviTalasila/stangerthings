@@ -5,11 +5,16 @@ import HomePage from "./Home";
 import swal from "sweetalert";
 import { register } from "../api";
 
-const Register = ({ setLoginType }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Register = ({
+  username,
+  setUsername,
+  password,
+  setPassword,
+  userToken,
+  setUserToken,
+  setLoggedIn,
+}) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [userToken, setUserToken] = useState(false);
 
   const confirmPasswords = (event) => {
     event.preventDefault();
@@ -33,6 +38,7 @@ const Register = ({ setLoginType }) => {
         const token = data.data.token;
         localStorage.setItem(`${username}Token`, token);
         setUserToken(token);
+        setLoggedIn(true);
         swal(`You are logged in as ${username}`);
         setPasswordConfirmation("");
       }

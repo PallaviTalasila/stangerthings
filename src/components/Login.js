@@ -5,11 +5,15 @@ import swal from "sweetalert";
 import { login } from "../api";
 import { Link } from "react-router-dom";
 
-const Login = ({ setLoginType }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [userToken, setUserToken] = useState(false);
-
+const Login = ({
+  username,
+  setUsername,
+  password,
+  setPassword,
+  userToken,
+  setUserToken,
+  setLoggedIn,
+}) => {
   const fetchApi = async (event) => {
     event.preventDefault();
     try {
@@ -22,6 +26,7 @@ const Login = ({ setLoginType }) => {
         const token = data.data.token;
         localStorage.setItem(`${username}Token`, token);
         setUserToken(token);
+        setLoggedIn(true);
         swal(`You are logged in as ${username}`);
       }
     } catch (error) {
