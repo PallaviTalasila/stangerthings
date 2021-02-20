@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import { PostForm, Header } from "./components";
+import { PostForm, Header, Login, Register, Home, ViewPosts } from "./components";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const App = () => {
-  //I am using this to show the login page and the register page.
-  const [loginType, setLoginType] = useState("login");
 
-  //the Ternary operator in the return portion has a default set to the login page since useState is set to login above. If it changes we get the register page instead.
+  
   return (
     <div className="app">
-      {loginType === "login" ? (
-        <Login setLoginType={setLoginType} />
-      ) : (
-        <Register setLoginType={setLoginType} />
-      )}
-      <Header />
-      <PostForm />
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/posts" component={ViewPosts} />
+          <Route path="/" component= {Home}/>          
+          
+        </Switch>
+      </Router>
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("app")
+);

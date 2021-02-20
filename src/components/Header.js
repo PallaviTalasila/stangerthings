@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = ({ username, setUsername, setPassword, setUserToken }) => {
   const handleClick = (event) => {
@@ -11,19 +12,10 @@ const Header = ({ username, setUsername, setPassword, setUserToken }) => {
   return (
     <div>
       <header>
-        <a href="#default" className="logo">
-          Stanger Things
-        </a>
-        <div className="header-right">
-          <a className="active" href="#home">
-            Home
-          </a>
-          <a href="#posts">Posts</a>
-          <a href="#profile">Profile</a>
-          <button className="logout" onClick={handleClick}>
-            Logout
-          </button>
-        </div>
+        <div className="logo">Stanger Things</div>
+        <Link to="/">HOME</Link>
+        <Link to="/posts">POSTS</Link>
+        <Link to="/login">LOGIN</Link>
       </header>
     </div>
   );

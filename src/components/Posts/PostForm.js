@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login,register, addPost } from "../api";
+import { login,register, addPost } from "../../api";
 
 const initialFormData = Object.freeze({
   title: "",
