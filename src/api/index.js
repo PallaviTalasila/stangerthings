@@ -1,7 +1,7 @@
 const BASE_URL = "https://strangers-things.herokuapp.com";
 const COHORT_NAME = "2010-unf-rm-web-pt";
 
-export async function register() {
+export async function register(username, password) {
   try {
     const response = await fetch(
       `${BASE_URL}/api/${COHORT_NAME}/users/register`,
@@ -12,20 +12,20 @@ export async function register() {
         },
         body: JSON.stringify({
           user: {
-            username: "pallavit",
-            password: "ptpassword",
+            username: username,
+            password: password,
           },
         }),
       }
     );
     const data = await response.json();
-    return data.data.token;
+    return data;
   } catch (error) {
     throw error;
   }
 }
 
-export async function login() {
+export async function login(username, password) {
   try {
     const response = await fetch(`${BASE_URL}/api/${COHORT_NAME}/users/login`, {
       method: "POST",
@@ -34,14 +34,30 @@ export async function login() {
       },
       body: JSON.stringify({
         user: {
-          username: "pallavit",
-          password: "ptpassword",
+          username: username,
+          password: password,
         },
       }),
     });
     const data = await response.json();
-    console.log(data.data.token);
-    return data.data.token;
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchPosts(token, formData) {
+  try {
+    const response = await fetch(`${BASE_URL}/api/${COHORT_NAME}/posts`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const results = await response.json();
+    return results.data;
   } catch (error) {
     throw error;
   }
@@ -49,11 +65,11 @@ export async function login() {
 
 export async function addPost(token, formData) {
   try {
-    const response = fetch(`${BASE_URL}/api/${COHORT_NAME}/posts`, {
+    const response = await fetch(`${BASE_URL}/api/${COHORT_NAME}/posts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token,
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify(formData),
     });
