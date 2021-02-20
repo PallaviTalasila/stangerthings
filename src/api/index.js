@@ -47,15 +47,9 @@ export async function login(username, password) {
   }
 }
 
-export async function fetchPosts(token, formData) {
+export async function fetchPosts() {
   try {
-    const response = await fetch(`${BASE_URL}/api/${COHORT_NAME}/posts`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    const response = await fetch(`${BASE_URL}/api/${COHORT_NAME}/posts`);
     const results = await response.json();
     return results.data;
   } catch (error) {
