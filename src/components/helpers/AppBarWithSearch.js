@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
+import { Link } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -97,6 +98,7 @@ export default function AppBarWithSearch() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+          <Link to="\postForm"> Add Post</Link>
         </Toolbar>
       </AppBar>
     </div>
