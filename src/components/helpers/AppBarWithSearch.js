@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link } from "react-router-dom";
-
+import Button from "@material-ui/core/Button";
+import PostForm from "../Posts/PostForm";
+import Drawer from "@material-ui/core/Drawer";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    maxWidth:"75%",
-    display:"flex",
-    paddingTop:"20px",
-    justifyContent:"center",
-    alignItems:"center"
+    maxWidth: "75%",
+    display: "flex",
+    paddingTop: "20px",
+    justifyContent: "center",
+    alignItems: "center",
   },
- 
+
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
@@ -76,7 +77,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppBarWithSearch() {
   const classes = useStyles();
- 
+  const [state, setState] = useState({
+    top: false,
+  });
+  const [action, setAction] = useState(null);
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+    setAction("add");
+  };
 
   return (
     <div className={classes.appBar}>
@@ -98,7 +114,14 @@ export default function AppBarWithSearch() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <Link to="/postForm"> Add Post</Link>
+          <Button onClick={toggleDrawer("top", true)}>Add Post</Button>
+          <Drawer
+            anchor={"top"}
+            open={state["top"]}
+            onClose={toggleDrawer("top", false)}
+          >
+            <PostForm action={action} />
+          </Drawer>
         </Toolbar>
       </AppBar>
     </div>

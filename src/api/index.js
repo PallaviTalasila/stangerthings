@@ -57,30 +57,15 @@ export async function fetchPosts() {
   }
 }
 
-export async function addPost(
-  userToken,
-  formTitle,
-  formDescription,
-  formPrice,
-  formLocation,
-  formWillDeliver
-) {
+export async function addPost(token, formData) {
   try {
     const response = await fetch(`${BASE_URL}/api/${COHORT_NAME}/posts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${userToken}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        post: {
-          title: `${formTitle}`,
-          description: `${formDescription}`,
-          price: `${formPrice}`,
-          location: `${formLocation}`,
-          willDeliver: `${formWillDeliver}`,
-        },
-      }),
+      body: JSON.stringify({ formData }),
     });
     const data = await response.json();
     return data;
@@ -97,7 +82,7 @@ export async function fetchMessage(postId, userToken, message) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${userToken}`,
+          Authorization: `Bearer ${userToken}`,
         },
         body: JSON.stringify({
           message: {
@@ -129,7 +114,7 @@ export async function fetchEditPost(
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${userToken}`,
+          Authorization: `Bearer ${userToken}`,
         },
         body: JSON.stringify({
           post: {
@@ -157,7 +142,7 @@ export async function fetchDelete(postId, userToken) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${userToken}`,
+          Authorization: `Bearer ${userToken}`,
         },
       }
     );
