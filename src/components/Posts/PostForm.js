@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login,register, addPost } from "../../api";
+import { login, register, addPost } from "../../api";
 
 const initialFormData = Object.freeze({
   title: "",
@@ -9,8 +9,9 @@ const initialFormData = Object.freeze({
   deliver: false,
 });
 
-const PostForm = () => {
+const PostForm = (props) => {
   const [formData, updateFormData] = useState(initialFormData);
+  const [action] = props.action;
 
   const handleChange = (e) => {
     const value =
@@ -30,9 +31,9 @@ const PostForm = () => {
       console.error(error);
     }
   }
-  return (
-    <div className="form-style-8">
-      <h2>Add New Post</h2>
+  return ( 
+    <div className="form-style-8">      
+     <h2>Add New Post</h2>
       <form>
         <input
           type="text"
@@ -71,8 +72,7 @@ const PostForm = () => {
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </form>
-    </div>
-  );
+    </div>)
 };
 
 export default PostForm;
