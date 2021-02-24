@@ -63,10 +63,89 @@ export async function addPost(token, formData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ formData }),
     });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchMessage(postId, userToken, message) {
+  try {
+    const response = await fetch(
+      `https://strangers-things.herokuapp.com/api/2010-unf-rm-web-pt/posts/${postId}/messages`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          message: {
+            content: `${message}`,
+          },
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchEditPost(
+  postId,
+  userToken,
+  editTitle,
+  editDescription,
+  editPrice,
+  editLocation,
+  editWillDeliver
+) {
+  try {
+    const response = await fetch(
+      `https://strangers-things.herokuapp.com/api/2010-unf-rm-web-pt/posts/${postId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          post: {
+            title: `${editTitle}`,
+            description: `${editDescription}`,
+            price: `${editPrice}`,
+            location: `${editLocation}`,
+            willDeliver: `${editWillDeliver}`,
+          },
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchDelete(postId, userToken) {
+  try {
+    const response = await fetch(
+      `https://strangers-things.herokuapp.com/api/2010-unf-rm-web-pt/posts/${postId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
