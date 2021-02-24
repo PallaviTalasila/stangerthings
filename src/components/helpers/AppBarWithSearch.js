@@ -98,7 +98,7 @@ export default function AppBarWithSearch() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <Link to="\postForm"> Add Post</Link>
+          <Link to="/postForm"> Add Post</Link>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import SimpleTabs from '../components/helpers/ProfileTab'
 
-const Profile = ({ username }) => {
-
-  const [messages, setMessages] = useState([]);
-  const [posts, setPosts] = useState([]);
-
+const Profile = ({
+  username,
+  myMessages,
+  setMyMessages,
+  myPosts,
+  setMyPosts,
+}) => {
   const userToken = localStorage.getItem(`${username}Token`);
 
   useEffect(() => {
@@ -21,25 +24,20 @@ const Profile = ({ username }) => {
         );
         const data = await response.json();
         console.log(data);
-        setMessages(data.data.messages);
-        setPosts(data.data.posts);
+        setMyMessages(data.data.messages);
+        setMyPosts(data.data.posts);
       } catch (error) {
         console.error(error);
       }
     };
     fetchProfile();
-  }, [userToken]);
+  }, [userToken, setMyMessages, setMyPosts]);
+
+  console.log(myMessages);
 
   return (
     <div>
-      <div className="messages">
-        <h1>Messages</h1>
-        {messages ? <p>please login</p> : <p>{messages}</p>}
-      </div>
-      <div className="posts">
-        <h1>Posts</h1>
-        {!posts ? "please login" : posts}
-      </div>
+      <SimpleTabs myMessages={myMessages} username={username} />
     </div>
   );
 };
