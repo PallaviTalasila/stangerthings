@@ -13,6 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Post from "./Post";
+import Message from "./Message";
 import Drawer from "@material-ui/core/Drawer";
 
 const useStyles = makeStyles((theme) => ({
@@ -66,10 +67,13 @@ const initialFormData = Object.freeze({
 const ViewPosts = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,
   });
+
+  const { userToken, loggedIn, message, setMessage } = props;
 
   useEffect(() => {
     try {
@@ -92,11 +96,89 @@ const ViewPosts = (props) => {
     setState({ ...state, [anchor]: open });
   };
 
+  const postMatches = (post, text) => {
+    //post.willDeliver
+    const lowerCaseText = text.toLowerCase();
+    const author = post.author.username.toLowerCase();
+    const description = post.description.toLowerCase();
+    const location = post.location.toLowerCase();
+    const title = post.title.toLowerCase();
+    if (
+      author.includes(lowerCaseText) ||
+      description.includes(lowerCaseText) ||
+      location.includes(lowerCaseText) ||
+      title.includes(lowerCaseText)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const filteredPosts = posts.filter((post) => postMatches(post, searchTerm));
+  const postsToDisplay = searchTerm.length ? filteredPosts : posts;
+
+  const authorCheck = (post, props, index) => {
+    if (post.author.username !== props.username && loggedIn) {
+      return (
+        <AccordionActions>
+          <Button
+            size="small"
+            color="primary"
+            onClick={toggleDrawer(post._id, true)}
+          >
+            Send Message
+          </Button>
+          <Drawer
+            anchor={"top"}
+            open={state[post._id]}
+            onClose={toggleDrawer(post._id, false)}
+          >
+            <Message
+              key={post._id}
+              userToken={userToken}
+              loggedIn={loggedIn}
+              message={message}
+              setMessage={setMessage}
+              postId={post._id}
+            />
+          </Drawer>
+        </AccordionActions>
+      );
+    } else {
+      return (
+        <AccordionActions>
+          <Button
+            size="small"
+            color="primary"
+            onClick={toggleDrawer(post._id, true)}
+          >
+            View Post
+          </Button>
+          <Drawer
+            anchor={"top"}
+            open={state[post._id]}
+            onClose={toggleDrawer(post._id, false)}
+          >
+            <Post key={index} post={post} />
+          </Drawer>
+        </AccordionActions>
+      );
+    }
+  };
+
   return (
     <div>
-      <AppBarWithSearch />
+      <AppBarWithSearch
+        posts={posts}
+        setPosts={setPosts}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        loggedIn={loggedIn}
+      />
       <div className={classes.root}>
-        {posts.map((post, index) => {
+        {postsToDisplay.map((post, index) => {
+          console.log(post);
           return (
             <Accordion key={index} defaultExpanded>
               <AccordionSummary
@@ -128,27 +210,8 @@ const ViewPosts = (props) => {
                   </Typography>
                 </div>
               </AccordionDetails>
+              {authorCheck(post, props, index)}
               <Divider />
-              <AccordionActions>
-                <Button size="small" color="primary">
-                  <Link to="/profile">Send Message </Link>
-                </Button>
-
-                <Button
-                  size="small"
-                  color="primary"
-                  onClick={toggleDrawer(post._id, true)}
-                >
-                  View Post
-                </Button>
-                <Drawer
-                  anchor={"top"}
-                  open={state[post._id]}
-                  onClose={toggleDrawer(post._id, false)}
-                >
-                  <Post key={index} post={post} />
-                </Drawer>
-              </AccordionActions>
             </Accordion>
           );
         })}

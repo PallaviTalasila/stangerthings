@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBarWithSearch() {
+export default function AppBarWithSearch({posts, setPosts, loggedIn, searchTerm, setSearchTerm}) {
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,
@@ -112,9 +112,11 @@ export default function AppBarWithSearch() {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
             />
           </div>
-          <Button onClick={toggleDrawer("top", true)}>Add Post</Button>
+          {loggedIn ? <Button onClick={toggleDrawer("top", true)}>Add Post</Button> : <p>Login to add a post</p>}
           <Drawer
             anchor={"top"}
             open={state["top"]}

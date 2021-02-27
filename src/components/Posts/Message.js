@@ -7,11 +7,14 @@ const Message = ({ message, setMessage, userToken, loggedIn, postId }) => {
     event.preventDefault();
 
     try {
-      await fetchMessage(postId, userToken, message);
-      setMessage("");
+      const data = await fetchMessage(postId, userToken, message);
+      if(data.success === true) {
+        setMessage("");
       swal("Your message was sent successfully");
+      } else {
+        swal("Message failed to send");
+      }
     } catch (error) {
-      swal("Message failed to send");
       console.error(error);
     }
   };

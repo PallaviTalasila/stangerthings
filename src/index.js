@@ -10,7 +10,7 @@ import {
 } from "./components";
 import Profile from "./components/Profile";
 import Message from "./components/Posts/Message";
-import EditPost from './components/Posts/EditPost'
+import EditPost from "./components/Posts/EditPost";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const App = () => {
@@ -51,6 +51,7 @@ const App = () => {
                 setPassword={setPassword}
                 userToken={userToken}
                 setUserToken={setUserToken}
+                loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
               />
             )}
@@ -66,6 +67,7 @@ const App = () => {
                 setPassword={setPassword}
                 userToken={userToken}
                 setUserToken={setUserToken}
+                loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
               />
             )}
@@ -76,6 +78,9 @@ const App = () => {
               <Profile
                 {...props}
                 username={username}
+                userToken={userToken}
+                message={message}
+                setMessage={setMessage}
                 myMessages={myMessages}
                 setMyMessages={setMyMessages}
                 myPosts={myPosts}
@@ -95,19 +100,8 @@ const App = () => {
                 posts={posts}
                 setPosts={setPosts}
                 username={username}
-              />
-            )}
-          />
-          <Route
-            path="/message"
-            render={(props) => (
-              <Message
-                {...props}
-                loggedIn={loggedIn}
-                userToken={userToken}
                 message={message}
                 setMessage={setMessage}
-                postId={postId}
               />
             )}
           />
@@ -152,7 +146,13 @@ const App = () => {
               />
             )}
           />
-          <Route path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Home {...props} loggedIn={loggedIn} username={username} />
+            )}
+          />
         </Switch>
       </Router>
     </div>
@@ -165,5 +165,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById("app")
 );
-
-//Working on the delete within the view posts and posts tabs. isAuthor is not setting to true for some reason.
