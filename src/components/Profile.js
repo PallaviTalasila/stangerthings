@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import SimpleTabs from '../components/helpers/ProfileTab'
+import SimpleTabs from "../components/helpers/ProfileTab";
 
 const Profile = ({
+  message,
+  setMessage,
+  userToken,
   username,
   myMessages,
   setMyMessages,
   myPosts,
   setMyPosts,
 }) => {
-  const userToken = localStorage.getItem(`${username}Token`);
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -23,7 +24,7 @@ const Profile = ({
           }
         );
         const data = await response.json();
-        console.log(data);
+        console.log(data.data.messages)
         setMyMessages(data.data.messages);
         setMyPosts(data.data.posts);
       } catch (error) {
@@ -31,13 +32,17 @@ const Profile = ({
       }
     };
     fetchProfile();
-  }, [userToken, setMyMessages, setMyPosts]);
-
-  console.log(myMessages);
+  }, [userToken]);
 
   return (
     <div>
-      <SimpleTabs myMessages={myMessages} username={username} />
+      <SimpleTabs
+        myMessages={myMessages}
+        username={username}
+        message={message}
+        setMessage={setMessage}
+        userToken={userToken}
+      />
     </div>
   );
 };

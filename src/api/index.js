@@ -65,7 +65,7 @@ export async function addPost(token, formData) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ formData }),
+      body: JSON.stringify({ post:formData }),
     });
     const data = await response.json();
     return data;
@@ -140,6 +140,24 @@ export async function fetchDelete(postId, userToken) {
       `https://strangers-things.herokuapp.com/api/2010-unf-rm-web-pt/posts/${postId}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchProfile(userToken) {
+  try {
+    const response = await fetch(
+      `https://strangers-things.herokuapp.com/api/2010-unf-rm-web-pt/users/me`,
+      {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`,

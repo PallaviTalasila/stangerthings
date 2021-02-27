@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
-import PostForm from "../Posts/PostForm";
+import AddPost from "../Posts/AddPost";
 import Drawer from "@material-ui/core/Drawer";
 
 const useStyles = makeStyles((theme) => ({
@@ -75,12 +75,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBarWithSearch() {
+export default function AppBarWithSearch({posts, setPosts, loggedIn, searchTerm, setSearchTerm,userToken}) {
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,
   });
-  const [action, setAction] = useState(null);
+  const { loggedIn, userToken, setPosts, posts } = props;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -91,7 +91,6 @@ export default function AppBarWithSearch() {
     }
 
     setState({ ...state, [anchor]: open });
-    setAction("add");
   };
 
   return (
@@ -112,15 +111,25 @@ export default function AppBarWithSearch() {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
             />
           </div>
-          <Button onClick={toggleDrawer("top", true)}>Add Post</Button>
+          {loggedIn && (
+            <Button onClick={toggleDrawer("top", true)}>Add Post</Button>
+          )}
+
           <Drawer
             anchor={"top"}
             open={state["top"]}
             onClose={toggleDrawer("top", false)}
           >
-            <PostForm action={action} />
+            <AddPost
+              loggedIn={loggedIn}
+              userToken={userToken}
+              setPosts={setPosts}
+              posts={posts}
+            />
           </Drawer>
         </Toolbar>
       </AppBar>

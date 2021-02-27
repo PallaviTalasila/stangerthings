@@ -1,4 +1,4 @@
-export { default as PostForm } from "./Posts/PostForm";
+export { default as AddPost } from "./Posts/AddPost";
 export { default as Header } from "./Header";
 export { default as Home } from "./Home";
 export { default as Login } from "./Login";

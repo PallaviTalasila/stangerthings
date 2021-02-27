@@ -1,15 +1,18 @@
-import { ContactsOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
-import { login, register, addPost } from "../../api";
+import Button from "@material-ui/core/Button";
+import EditPost from "./EditPost";
+import { fetchDelete } from "../../api";
+import swal from "sweetalert";
+import Drawer from "@material-ui/core/Drawer";
 
 const Post = (props) => {
-  const { post } = props;
-  const { title, description, price, location, deliver } = post;
+  const { post, onChange } = props;
+  const { title, description, price, location, deliver, _id } = post;
   const nothing = () => {};
-  const { onChange } = props;
 
   return (
     <div className="form-style-8">
+      <h2>Post</h2>
       <form>
         <input
           type="text"
@@ -49,15 +52,11 @@ const Post = (props) => {
             name="deliver"
             checked={deliver}
             value={deliver ? true : false}
-            readOnly={!!deliver}
+            disabled={!!deliver}
             onChange={deliver ? nothing : onChange}
           />
           Willing to Deliver?
         </label>
-        <div>
-          {/* <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button> */}
-        </div>
       </form>
     </div>
   );
