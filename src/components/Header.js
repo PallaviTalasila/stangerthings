@@ -39,7 +39,8 @@ export default function Header({
   const classes = useStyles();
   const handleClick = (event) => {
     event.preventDefault();
-    localStorage.removeItem(`${username}Token`);
+    localStorage.removeItem(`Token`);
+    localStorage.removeItem(`Username`);
     setLoggedIn(false);
     setUsername("");
     setPassword("");

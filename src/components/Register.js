@@ -37,10 +37,11 @@ const Register = ({
         setPasswordConfirmation("");
       } else {
         const token = data.data.token;
-        localStorage.setItem(`${username}Token`, token);
+        localStorage.setItem(`Token`, token);
         setUserToken(token);
         setLoggedIn(true);
         setUsername(username);
+        localStorage.setItem(`Username`, username);
         swal(`You are logged in as ${username}`);
         setPasswordConfirmation("");
         history.push("/");
