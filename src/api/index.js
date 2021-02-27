@@ -65,7 +65,7 @@ export async function addPost(token, formData) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ formData }),
+      body: JSON.stringify({ post:formData }),
     });
     const data = await response.json();
     return data;

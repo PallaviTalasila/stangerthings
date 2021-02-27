@@ -105,19 +105,3 @@ export default function SimpleTabs({ myMessages, username }) {
   );
 }
 
-/* 
-  <h1>Messages to me</h1>
-        {myMessages.fromUser?.username !== username ? (
-          myMessages.map((message) => {
-            return (
-              <div key={myMessages.id}>
-                <h3>Messages From Me</h3>
-                <h4>{message.fromUser.username}</h4>
-                <p>{message.content}</p>
-              </div>
-            );
-          })
-        ) : (
-          <p>Please login</p>
-        )}
-*/

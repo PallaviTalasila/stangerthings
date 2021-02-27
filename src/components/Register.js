@@ -39,6 +39,7 @@ const Register = ({
         localStorage.setItem(`${username}Token`, token);
         setUserToken(token);
         setLoggedIn(true);
+        setUsername(username);
         swal(`You are logged in as ${username}`);
         setPasswordConfirmation("");
       }

@@ -14,15 +14,14 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Post from "./Post";
 import Drawer from "@material-ui/core/Drawer";
+import EditPost from "./EditPost";
 
 const useStyles = makeStyles((theme) => ({
   postsWrapper: {
     display: "flex",
     flexDirection: "column !important",
   },
-  postsView: {
-    backGround: "green",
-  },
+
   root: {
     width: "100%",
   },
@@ -55,21 +54,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const initialFormData = Object.freeze({
-  title: "",
-  description: "",
-  price: "",
-  location: "",
-  deliver: false,
-});
-
 const ViewPosts = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,
   });
+  const { username, userToken, loggedIn } = props;
 
   useEffect(() => {
     try {
@@ -94,11 +85,16 @@ const ViewPosts = (props) => {
 
   return (
     <div>
-      <AppBarWithSearch />
+      <AppBarWithSearch
+        loggedIn={loggedIn}
+        userToken={userToken}
+        setPosts={setPosts}
+        posts={posts}
+      />
       <div className={classes.root}>
         {posts.map((post, index) => {
           return (
-            <Accordion key={index} defaultExpanded>
+            <Accordion key={index}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1c-content"
@@ -109,7 +105,7 @@ const ViewPosts = (props) => {
                     {post.title}
                   </Typography>
                 </div>
-                <div className={classes.column}>
+                <div className={classes.details}>
                   <Typography className={classes.secondaryHeading}>
                     {post.description}
                   </Typography>
@@ -130,10 +126,11 @@ const ViewPosts = (props) => {
               </AccordionDetails>
               <Divider />
               <AccordionActions>
-                <Button size="small" color="primary">
-                  <Link to="/profile">Send Message </Link>
-                </Button>
-
+                {loggedIn && username === post.author.username ? (
+                  <Button size="small" color="primary">
+                    <Link to="/profile">Send Message </Link>
+                  </Button>
+                ) : null}
                 <Button
                   size="small"
                   color="primary"
@@ -146,7 +143,25 @@ const ViewPosts = (props) => {
                   open={state[post._id]}
                   onClose={toggleDrawer(post._id, false)}
                 >
-                  <Post key={index} post={post} />
+                  <div>
+                    {username === post.author.username ? (
+                      <EditPost
+                        postId={post._id}
+                        post={post}
+                        posts={posts}
+                        setPosts={setPosts}
+                        loggedIn={loggedIn}
+                        userToken={userToken}
+                      />
+                    ) : (
+                      <Post
+                        postId={post._id}
+                        post={post}
+                        setPosts={setPosts}
+                        posts={posts}
+                      />
+                    )}
+                  </div>
                 </Drawer>
               </AccordionActions>
             </Accordion>
