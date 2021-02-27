@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { fetchEditPost, fetchDelete } from "../../api";
 import swal from "sweetalert";
 
@@ -10,6 +10,8 @@ const EditPost = (props) => {
   const [price, setPrice] = useState(post.price);
   const [location, setLocation] = useState(post.location);
   const [deliver, setDeliver] = useState(post.deliver);
+
+
 
   async function handleSave(e) {
     e.preventDefault();

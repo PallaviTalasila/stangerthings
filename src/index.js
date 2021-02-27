@@ -88,6 +88,8 @@ const App = () => {
                   userToken={userToken}
                   //posts={posts}
                   username={username}
+                  message={message}
+                  setMessage={setMessage}
                 />
               )}
             />

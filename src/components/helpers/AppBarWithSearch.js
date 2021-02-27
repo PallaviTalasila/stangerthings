@@ -80,7 +80,7 @@ export default function AppBarWithSearch({posts, setPosts, loggedIn, searchTerm,
   const [state, setState] = useState({
     top: false,
   });
-  const { loggedIn, userToken, setPosts, posts } = props;
+  //const { loggedIn, userToken, setPosts, posts } = props;
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
