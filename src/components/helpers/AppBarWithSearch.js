@@ -12,6 +12,7 @@ import Drawer from "@material-ui/core/Drawer";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     maxWidth: "75%",
+    margin: 'auto',
     display: "flex",
     paddingTop: "20px",
     justifyContent: "center",
