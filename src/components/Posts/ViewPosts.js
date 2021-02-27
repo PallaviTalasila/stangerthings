@@ -62,9 +62,8 @@ const ViewPosts = (props) => {
   const [state, setState] = useState({
     top: false,
   });
-  const { username, userToken, loggedIn } = props;
 
-  const { userToken, loggedIn, message, setMessage } = props;
+  const { userToken, loggedIn, message, setMessage, username } = props;
 
   useEffect(() => {
     try {
@@ -74,6 +73,7 @@ const ViewPosts = (props) => {
     } catch (error) {
       console.log(error);
     }
+    
   }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -203,7 +203,7 @@ const ViewPosts = (props) => {
               </AccordionDetails>
               <Divider />
               <AccordionActions>
-                {loggedIn && username === post.author.username ? (
+                {loggedIn && username !== post.author.username ? (
                   <>
                     <Button
                       size="small"
@@ -246,7 +246,7 @@ const ViewPosts = (props) => {
                         postId={post._id}
                         post={post}
                         posts={posts}
-                        setPosts={setPosts}
+                        setPosts={()=>setPosts}
                         loggedIn={loggedIn}
                         userToken={userToken}
                       />
