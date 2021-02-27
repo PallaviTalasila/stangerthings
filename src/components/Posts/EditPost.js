@@ -14,7 +14,7 @@ const EditPost = (props) => {
     e.preventDefault();
 
     try {
-      const data = await fetchEditPost(
+       await fetchEditPost(
         postId,
         userToken,
         title,
