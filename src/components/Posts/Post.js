@@ -2,13 +2,13 @@ import React from "react";
 
 const Post = (props) => {
   const { post, onChange } = props;
-  const { title, description, price, location, deliver, _id } = post;
+  const { title, description, price, location, deliver} = post;
   const nothing = () => {};
 
   return (
     <div className="form-style-8">
       <h2>Post</h2>
-      <form>
+      <form >
         <input
           type="text"
           name="title"
@@ -50,7 +50,7 @@ const Post = (props) => {
             disabled={!!deliver}
             onChange={deliver ? nothing : onChange}
           />
-          Willing to Deliver?
+          <span style={{ paddingLeft: "10px", fontWeight: "900"  }}>Willing to Deliver?</span>
         </label>
       </form>
     </div>

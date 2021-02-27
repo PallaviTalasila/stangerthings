@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
   root: {
     maxWidth: "75%",
-    margin: 'auto',
+    margin: "auto",
     paddingTop: "20px",
     justifyContent: "center",
     alignItems: "center",
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   icon: {
     verticalAlign: "bottom",
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   details: {
     alignItems: "center",
+    paddingLeft: "10px",
   },
 
   helper: {
@@ -55,6 +56,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       textDecoration: "underline",
     },
+  },
+  items:{borderRadius:"10px",marginBottom:'10px',backgroundColor:	"#e6ebff"},
+ 
+  expandedPanel: {
+    backgroundColor: theme.palette.primary.main,
+    color: "white !important",
   },
 }));
 
@@ -137,11 +144,12 @@ const ViewPosts = (props) => {
       <div className={classes.root}>
         {postsToDisplay.map((post, index) => {
           return (
-            <Accordion key={index}>
+            <Accordion key={index} className={classes.items}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1c-content"
                 id="panel1c-header"
+                classes={{ expanded: classes.expandedPanel }}
               >
                 <div>
                   <Typography className={classes.heading}>
@@ -176,7 +184,7 @@ const ViewPosts = (props) => {
                       color="primary"
                       onClick={toggleMessageDrawer(post._id, true)}
                     >
-                      Send Message
+                      <span style={{color:"white"}}>Send Message</span>
                     </Button>
                     <Drawer
                       anchor={"top"}
@@ -199,7 +207,7 @@ const ViewPosts = (props) => {
                   color="primary"
                   onClick={toggleViewDrawer(post._id, true)}
                 >
-                  View Post
+                    <span style={{color:"white"}}>View Post</span>
                 </Button>
                 <Drawer
                   anchor={"top"}
@@ -215,7 +223,6 @@ const ViewPosts = (props) => {
                         setPosts={setPosts}
                         loggedIn={loggedIn}
                         userToken={userToken}
-                        
                       />
                     ) : (
                       <Post

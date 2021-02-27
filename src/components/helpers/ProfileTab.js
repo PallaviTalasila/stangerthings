@@ -6,7 +6,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import clsx from "clsx";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -52,49 +51,13 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  postsWrapper: {
-    display: "flex",
-    flexDirection: "column !important",
-  },
-  postsView: {
-    backGround: "green",
-  },
-  root: {
-    width: "100%",
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  icon: {
-    verticalAlign: "bottom",
-    height: 20,
-    width: 20,
-  },
-  details: {
-    alignItems: "center",
-  },
-
-  helper: {
-    borderLeft: `2px solid ${theme.palette.divider}`,
-    padding: theme.spacing(1, 2),
-  },
-  link: {
-    color: theme.palette.primary.main,
-    textDecoration: "none",
-    "&:hover": {
-      textDecoration: "underline",
-    },
-    content: {
-      display: "flex",
-      flexDirection: "column",
-    },
+  items:{borderRadius:"10px",marginBottom:'10px',backgroundColor:	"#e6ebff"},
+ 
+  expandedPanel: {
+    backgroundColor: theme.palette.primary.main,
+    color: "white !important",
   },
 }));
 
@@ -127,27 +90,37 @@ export default function SimpleTabs({
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <div
+      className={classes.root}
+      style={{
+        paddingTop: "100px",
+        width: "75%",
+        margin: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <AppBar position="realtive">
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
+          indicatorColor="white"
         >
           <Tab label="Messages from me" {...a11yProps(0)} />
           <Tab label="Messages to me" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        
         {myMessages.map((messages) => {
           if (messages.fromUser.username === username) {
             return (
-              <Accordion key={messages._id}>
+              <Accordion key={messages._id} className={classes.items}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1c-content"
                   id="panel1c-header"
+                  classes={{ expanded: classes.expandedPanel }}
                 >
                   <div>
                     <Typography className={classes.heading}>
@@ -179,7 +152,6 @@ export default function SimpleTabs({
         })}
       </TabPanel>
       <TabPanel value={value} index={1}>
-       
         {myMessages.map((messages) => {
           if (messages.fromUser.username !== username) {
             return (

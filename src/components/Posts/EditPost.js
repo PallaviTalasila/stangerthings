@@ -23,6 +23,7 @@ const EditPost = (props) => {
         location,
         deliver
       );
+      swal("Sucessfully Edited Post");
       //fetch new posts from the api
       try {
         Promise.all([fetchPosts()]).then(([data]) => {
@@ -33,13 +34,14 @@ const EditPost = (props) => {
       }
     } catch (error) {
       console.error(error);
+      swal("Failed to Edit Post");
     }
   }
 
   async function handleDelete(e) {
     e.preventDefault();
     try {
-      const data = await fetchDelete(postId, userToken);
+      await fetchDelete(postId, userToken);
       swal("Post successfully Deleted");
       //fetch new posts from the api
       try {
@@ -90,11 +92,13 @@ const EditPost = (props) => {
               value={deliver}
               onChange={(e) => setDeliver(e.target.value.trim())}
             />
-            Willing to Deliver?
+            <span style={{paddingLeft:"10px", fontWeight: "900" }}>Willing to Deliver?</span>
           </label>
-          <div>
+          <div style={{marginTop:'10px'}}>
             <button onClick={handleSave}>Save</button>
+            <span style={{marginLeft:'5px'}}>
             <button onClick={handleDelete}>Delete</button>
+            </span>
           </div>
         </form>
       </div>

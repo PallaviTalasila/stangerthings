@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addPost ,fetchPosts} from "../../api";
+import { addPost, fetchPosts } from "../../api";
 import swal from "sweetalert";
 
 const initialFormData = Object.freeze({
@@ -12,7 +12,7 @@ const initialFormData = Object.freeze({
 
 const AddPost = (props) => {
   const [formData, updateFormData] = useState(initialFormData);
-  const { loggedIn, userToken, setPosts} = props;
+  const { loggedIn, userToken, setPosts } = props;
 
   const handleChange = (e) => {
     const value =
@@ -77,8 +77,11 @@ const AddPost = (props) => {
               checked={formData.deliver}
               onChange={handleChange}
             />
-            Willing to Deliver?
+            <span style={{ paddingLeft: "10px", fontWeight: "900" }}>
+              Willing to Deliver?
+            </span>
           </label>
+
           <div>
             <button onClick={handleSubmit}>Submit</button>
           </div>

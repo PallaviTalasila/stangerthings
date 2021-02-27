@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "75%",
     margin: 'auto',
     display: "flex",
-    paddingTop: "20px",
+    paddingTop: "100px",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -124,7 +124,7 @@ export default function AppBarWithSearch({
             />
           </div>
           {loggedIn && (
-            <Button onClick={toggleDrawer("top", true)}>Add Post</Button>
+            <Button onClick={toggleDrawer("top", true)}style={{color:"white"}}>Add Post</Button>
           )}
 
           <Drawer
