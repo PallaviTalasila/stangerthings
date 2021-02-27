@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { Header, Login, Register, Home, ViewPosts } from "./components";
 import Profile from "./components/Profile";
 import Message from "./components/Posts/Message";
-
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Auth from "./auth";
 
@@ -43,7 +42,7 @@ const App = () => {
                   setPassword={setPassword}
                   userToken={userToken}
                   setUserToken={setUserToken}
-                  loggedIn = {loggedIn}
+                  loggedIn={loggedIn}
                   setLoggedIn={setLoggedIn}
                 />
               )}
@@ -59,7 +58,7 @@ const App = () => {
                   setPassword={setPassword}
                   userToken={userToken}
                   setUserToken={setUserToken}
-                  loggedIn = {loggedIn}
+                  loggedIn={loggedIn}
                   setLoggedIn={setLoggedIn}
                 />
               )}
@@ -70,6 +69,9 @@ const App = () => {
                 <Profile
                   {...props}
                   username={username}
+                  userToken={userToken}
+                  message={message}
+                  setMessage={setMessage}
                   myMessages={myMessages}
                   setMyMessages={setMyMessages}
                   myPosts={myPosts}
@@ -86,19 +88,6 @@ const App = () => {
                   userToken={userToken}
                   //posts={posts}
                   username={username}
-                />
-              )}
-            />
-            <Route
-              path="/message"
-              render={(props) => (
-                <Message
-                  {...props}
-                  loggedIn={loggedIn}
-                  userToken={userToken}
-                  message={message}
-                  setMessage={setMessage}
-                  postId={postId}
                 />
               )}
             />

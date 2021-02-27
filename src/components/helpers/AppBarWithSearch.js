@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBarWithSearch(props) {
+export default function AppBarWithSearch({posts, setPosts, loggedIn, searchTerm, setSearchTerm,userToken}) {
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,
@@ -111,6 +111,8 @@ export default function AppBarWithSearch(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
             />
           </div>
           {loggedIn && (

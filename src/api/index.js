@@ -152,3 +152,21 @@ export async function fetchDelete(postId, userToken) {
     throw error;
   }
 }
+
+export async function fetchProfile(userToken) {
+  try {
+    const response = await fetch(
+      `https://strangers-things.herokuapp.com/api/2010-unf-rm-web-pt/users/me`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

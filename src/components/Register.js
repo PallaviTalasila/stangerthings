@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import HomePage from "./Home";
 import swal from "sweetalert";
 import { register } from "../api";
 
@@ -13,6 +12,8 @@ const Register = ({
   userToken,
   setUserToken,
   setLoggedIn,
+  loggedIn,
+  history
 }) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
@@ -42,21 +43,15 @@ const Register = ({
         setUsername(username);
         swal(`You are logged in as ${username}`);
         setPasswordConfirmation("");
+        history.push("/");
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (userToken) {
-    return (
-      <HomePage
-        username={username}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        setUserToken={setUserToken}
-      />
-    );
+  if (loggedIn) {
+    return <div>You are already logged in</div>;
   } else {
     return (
       <div className="form-style-8">

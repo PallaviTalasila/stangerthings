@@ -1,5 +1,4 @@
 import React from "react";
-import HomePage from "./Home";
 import swal from "sweetalert";
 import { login } from "../api";
 import { Link } from "react-router-dom";
@@ -9,9 +8,11 @@ const Login = ({
   setUsername,
   password,
   setPassword,
+  loggedIn,
   userToken,
   setUserToken,
   setLoggedIn,
+  history,
 }) => {
   const fetchApi = async (event) => {
     event.preventDefault();
@@ -28,21 +29,15 @@ const Login = ({
         setLoggedIn(true);
         setUsername(username);
         swal(`You are logged in as ${username}`);
+        history.push("/");
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (userToken) {
-    return (
-      <HomePage
-        username={username}
-        setUsername={setUsername}
-        setPassword={setPassword}
-        setUserToken={setUserToken}
-      />
-    );
+  if (loggedIn) {
+    return <div>You are already logged in</div>;
   } else {
     return (
       <div className="form-style-8">

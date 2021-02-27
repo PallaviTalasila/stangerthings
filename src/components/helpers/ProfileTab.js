@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -6,6 +6,16 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import clsx from "clsx";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionActions from "@material-ui/core/AccordionActions";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Message from "../Posts/Message";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,11 +55,72 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  postsWrapper: {
+    display: "flex",
+    flexDirection: "column !important",
+  },
+  postsView: {
+    backGround: "green",
+  },
+  root: {
+    width: "100%",
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
+  icon: {
+    verticalAlign: "bottom",
+    height: 20,
+    width: 20,
+  },
+  details: {
+    alignItems: "center",
+  },
+
+  helper: {
+    borderLeft: `2px solid ${theme.palette.divider}`,
+    padding: theme.spacing(1, 2),
+  },
+  link: {
+    color: theme.palette.primary.main,
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    content: {
+      display: "flex",
+      flexDirection: "column",
+    },
+  },
 }));
 
-export default function SimpleTabs({ myMessages, username }) {
+export default function SimpleTabs({
+  message,
+  myMessages,
+  setMessage,
+  username,
+  userToken,
+}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [state, setState] = useState({
+    top: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,20 +134,44 @@ export default function SimpleTabs({ myMessages, username }) {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Messages from me" {...a11yProps(0)} />
+          <Tab label="Messages to me" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <h1>Messages from me</h1>
-        {myMessages.map((message) => {
-          if (message.fromUser.username === username) {
+        {myMessages.map((messages) => {
+          if (messages.fromUser.username === username) {
             return (
-              <div key={message._id}>
-                <p>{message.fromUser.username}</p>
-                <p>{message.content}</p>
-              </div>
+              <Accordion key={messages._id}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1c-content"
+                  id="panel1c-header"
+                >
+                  <div>
+                    <Typography className={classes.heading}>
+                      <strong>Sent by me:</strong> {messages.fromUser.username}
+                    </Typography>
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails className={classes.details}>
+                  <div className={classes.content}>
+                    <div>
+                      <Typography variant="content">
+                        <strong>Message:</strong> {messages.content}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="caption">
+                        <strong>Post:</strong>
+                        {messages.post.title}
+                      </Typography>
+                    </div>
+                  </div>
+                </AccordionDetails>
+                <Divider />
+              </Accordion>
             );
           } else {
             return null;
@@ -85,23 +180,66 @@ export default function SimpleTabs({ myMessages, username }) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <h1>Messages to me</h1>
-        {myMessages.map((message) => {
-          if (message.fromUser.username !== username) {
+        {myMessages.map((messages) => {
+          if (messages.fromUser.username !== username) {
             return (
-              <div key={message._id}>
-                <p>{message.fromUser.username}</p>
-                <p>{message.content}</p>
-              </div>
+              <Accordion key={messages._id}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1c-content"
+                  id="panel1c-header"
+                >
+                  <div>
+                    <Typography className={classes.heading}>
+                      <strong>From:</strong> {messages.fromUser.username}
+                    </Typography>
+                  </div>
+                </AccordionSummary>
+                <AccordionDetails className={classes.details}>
+                  <div className={classes.content}>
+                    <div>
+                      <Typography variant="content">
+                        <strong>Message:</strong> {messages.content}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="caption">
+                        <strong>Post:</strong>
+                        {messages.post.title}
+                      </Typography>
+                    </div>
+                  </div>
+                </AccordionDetails>
+                <AccordionActions>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={toggleDrawer(messages.post._id, true)}
+                  >
+                    Send Message
+                  </Button>
+                  <Drawer
+                    anchor={"top"}
+                    open={state[messages.post._id]}
+                    onClose={toggleDrawer(messages.post._id, false)}
+                  >
+                    <Message
+                      key={messages.post._id}
+                      userToken={userToken}
+                      message={message}
+                      setMessage={setMessage}
+                      postId={messages.post._id}
+                    />
+                  </Drawer>
+                </AccordionActions>
+                <Divider />
+              </Accordion>
             );
           } else {
             return null;
           }
         })}
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
     </div>
   );
 }
-
