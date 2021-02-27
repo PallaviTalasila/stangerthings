@@ -16,7 +16,6 @@ const App = () => {
   const [myMessages, setMyMessages] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [posts, setPosts] = useState([]);
-
   const [state, setState] = useState({});
 
   return (

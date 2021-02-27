@@ -75,7 +75,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBarWithSearch({posts, setPosts, loggedIn, searchTerm, setSearchTerm,userToken}) {
+export default function AppBarWithSearch({
+  posts,
+  setPosts,
+  loggedIn,
+  searchTerm,
+  setSearchTerm,
+  userToken,
+}) {
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,

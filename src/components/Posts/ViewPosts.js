@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { fetchPosts } from "../../api";
 import AppBarWithSearch from "../helpers/AppBarWithSearch";
 import { makeStyles } from "@material-ui/core/styles";
@@ -73,7 +72,6 @@ const ViewPosts = (props) => {
     } catch (error) {
       console.log(error);
     }
-    
   }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -88,7 +86,6 @@ const ViewPosts = (props) => {
   };
 
   const postMatches = (post, text) => {
-    //post.willDeliver
     const lowerCaseText = text.toLowerCase();
     const author = post.author.username.toLowerCase();
     const description = post.description.toLowerCase();
@@ -109,55 +106,6 @@ const ViewPosts = (props) => {
   const filteredPosts = posts.filter((post) => postMatches(post, searchTerm));
   const postsToDisplay = searchTerm.length ? filteredPosts : posts;
 
-  // const authorCheck = (post, props, index) => {
-  //   if (post.author.username !== props.username && loggedIn) {
-  //     return (
-  //       <AccordionActions>
-  //         <Button
-  //           size="small"
-  //           color="primary"
-  //           onClick={toggleDrawer(post._id, true)}
-  //         >
-  //           Send Message
-  //         </Button>
-  //         <Drawer
-  //           anchor={"top"}
-  //           open={state[post._id]}
-  //           onClose={toggleDrawer(post._id, false)}
-  //         >
-  //           <Message
-  //             key={post._id}
-  //             userToken={userToken}
-  //             loggedIn={loggedIn}
-  //             message={message}
-  //             setMessage={setMessage}
-  //             postId={post._id}
-  //           />
-  //         </Drawer>
-  //       </AccordionActions>
-  //     );
-  //   } else {
-  //     return (
-  //       <AccordionActions>
-  //         <Button
-  //           size="small"
-  //           color="primary"
-  //           onClick={toggleDrawer(post._id, true)}
-  //         >
-  //           View Post
-  //         </Button>
-  //         <Drawer
-  //           anchor={"top"}
-  //           open={state[post._id]}
-  //           onClose={toggleDrawer(post._id, false)}
-  //         >
-  //           <Post key={index} post={post} />
-  //         </Drawer>
-  //       </AccordionActions>
-  //     );
-  //   }
-  // };
-
   return (
     <div>
       <AppBarWithSearch
@@ -166,10 +114,10 @@ const ViewPosts = (props) => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         loggedIn={loggedIn}
+        userToken={userToken}
       />
       <div className={classes.root}>
         {postsToDisplay.map((post, index) => {
-          //console.log(post);
           return (
             <Accordion key={index}>
               <AccordionSummary
@@ -246,9 +194,10 @@ const ViewPosts = (props) => {
                         postId={post._id}
                         post={post}
                         posts={posts}
-                        setPosts={()=>setPosts}
+                        setPosts={setPosts}
                         loggedIn={loggedIn}
                         userToken={userToken}
+                        toggleDrawer={toggleDrawer}
                       />
                     ) : (
                       <Post

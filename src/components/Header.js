@@ -32,8 +32,6 @@ export default function Header({
   loggedIn,
   setLoggedIn,
 }) {
-  console.log(loggedIn);
-
   const history = useHistory();
 
   const classes = useStyles();

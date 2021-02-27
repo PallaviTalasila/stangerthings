@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addPost } from "../../api";
+import { addPost ,fetchPosts} from "../../api";
 import swal from "sweetalert";
 
 const initialFormData = Object.freeze({
@@ -12,7 +12,7 @@ const initialFormData = Object.freeze({
 
 const AddPost = (props) => {
   const [formData, updateFormData] = useState(initialFormData);
-  const { loggedIn, userToken, setPosts, posts} = props;
+  const { loggedIn, userToken, setPosts} = props;
 
   const handleChange = (e) => {
     const value =
@@ -27,8 +27,15 @@ const AddPost = (props) => {
     try {
       await addPost(userToken, formData);
       swal("Post successfully Added");
-      setPosts(posts);
-      
+
+      //fetch new posts from the api
+      try {
+        Promise.all([fetchPosts()]).then(([data]) => {
+          setPosts(data.posts);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.error(error);
       swal("Failed to Add Post");
