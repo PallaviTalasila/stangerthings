@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { fetchPosts } from "../../api";
 import AppBarWithSearch from "../helpers/AppBarWithSearch";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,7 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   root: {
-    width: "100%",
+    maxWidth: "75%",
+    margin: 'auto',
+    paddingTop: "20px",
+    justifyContent: "center",
+    alignItems: "center",
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -62,6 +65,9 @@ const ViewPosts = (props) => {
   const [state, setState] = useState({
     top: false,
   });
+  const [messageState, setMessageState] = useState({
+    top: false,
+  });
 
   const { userToken, loggedIn, message, setMessage, username } = props;
 
@@ -73,10 +79,9 @@ const ViewPosts = (props) => {
     } catch (error) {
       console.log(error);
     }
-    
   }, []);
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleViewDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -87,8 +92,18 @@ const ViewPosts = (props) => {
     setState({ ...state, [anchor]: open });
   };
 
+  const toggleMessageDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setMessageState({ ...messageState, [anchor]: open });
+  };
+
   const postMatches = (post, text) => {
-    //post.willDeliver
     const lowerCaseText = text.toLowerCase();
     const author = post.author.username.toLowerCase();
     const description = post.description.toLowerCase();
@@ -109,55 +124,6 @@ const ViewPosts = (props) => {
   const filteredPosts = posts.filter((post) => postMatches(post, searchTerm));
   const postsToDisplay = searchTerm.length ? filteredPosts : posts;
 
-  // const authorCheck = (post, props, index) => {
-  //   if (post.author.username !== props.username && loggedIn) {
-  //     return (
-  //       <AccordionActions>
-  //         <Button
-  //           size="small"
-  //           color="primary"
-  //           onClick={toggleDrawer(post._id, true)}
-  //         >
-  //           Send Message
-  //         </Button>
-  //         <Drawer
-  //           anchor={"top"}
-  //           open={state[post._id]}
-  //           onClose={toggleDrawer(post._id, false)}
-  //         >
-  //           <Message
-  //             key={post._id}
-  //             userToken={userToken}
-  //             loggedIn={loggedIn}
-  //             message={message}
-  //             setMessage={setMessage}
-  //             postId={post._id}
-  //           />
-  //         </Drawer>
-  //       </AccordionActions>
-  //     );
-  //   } else {
-  //     return (
-  //       <AccordionActions>
-  //         <Button
-  //           size="small"
-  //           color="primary"
-  //           onClick={toggleDrawer(post._id, true)}
-  //         >
-  //           View Post
-  //         </Button>
-  //         <Drawer
-  //           anchor={"top"}
-  //           open={state[post._id]}
-  //           onClose={toggleDrawer(post._id, false)}
-  //         >
-  //           <Post key={index} post={post} />
-  //         </Drawer>
-  //       </AccordionActions>
-  //     );
-  //   }
-  // };
-
   return (
     <div>
       <AppBarWithSearch
@@ -166,10 +132,10 @@ const ViewPosts = (props) => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         loggedIn={loggedIn}
+        userToken={userToken}
       />
       <div className={classes.root}>
         {postsToDisplay.map((post, index) => {
-          //console.log(post);
           return (
             <Accordion key={index}>
               <AccordionSummary
@@ -208,14 +174,14 @@ const ViewPosts = (props) => {
                     <Button
                       size="small"
                       color="primary"
-                      onClick={toggleDrawer(post._id, true)}
+                      onClick={toggleMessageDrawer(post._id, true)}
                     >
                       Send Message
                     </Button>
                     <Drawer
                       anchor={"top"}
-                      open={state[post._id]}
-                      onClose={toggleDrawer(post._id, false)}
+                      open={messageState[post._id]}
+                      onClose={toggleMessageDrawer(post._id, false)}
                     >
                       <Message
                         key={post._id}
@@ -231,14 +197,14 @@ const ViewPosts = (props) => {
                 <Button
                   size="small"
                   color="primary"
-                  onClick={toggleDrawer(post._id, true)}
+                  onClick={toggleViewDrawer(post._id, true)}
                 >
                   View Post
                 </Button>
                 <Drawer
                   anchor={"top"}
                   open={state[post._id]}
-                  onClose={toggleDrawer(post._id, false)}
+                  onClose={toggleViewDrawer(post._id, false)}
                 >
                   <div>
                     {username === post.author.username ? (
@@ -246,9 +212,10 @@ const ViewPosts = (props) => {
                         postId={post._id}
                         post={post}
                         posts={posts}
-                        setPosts={()=>setPosts}
+                        setPosts={setPosts}
                         loggedIn={loggedIn}
                         userToken={userToken}
+                        
                       />
                     ) : (
                       <Post

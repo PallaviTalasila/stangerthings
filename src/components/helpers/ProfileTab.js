@@ -139,7 +139,7 @@ export default function SimpleTabs({
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <h1>Messages from me</h1>
+        
         {myMessages.map((messages) => {
           if (messages.fromUser.username === username) {
             return (
@@ -179,7 +179,7 @@ export default function SimpleTabs({
         })}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <h1>Messages to me</h1>
+       
         {myMessages.map((messages) => {
           if (messages.fromUser.username !== username) {
             return (

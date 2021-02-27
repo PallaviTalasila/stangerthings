@@ -12,6 +12,7 @@ import Drawer from "@material-ui/core/Drawer";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     maxWidth: "75%",
+    margin: 'auto',
     display: "flex",
     paddingTop: "20px",
     justifyContent: "center",
@@ -75,7 +76,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBarWithSearch({posts, setPosts, loggedIn, searchTerm, setSearchTerm,userToken}) {
+export default function AppBarWithSearch({
+  posts,
+  setPosts,
+  loggedIn,
+  searchTerm,
+  setSearchTerm,
+  userToken,
+}) {
   const classes = useStyles();
   const [state, setState] = useState({
     top: false,

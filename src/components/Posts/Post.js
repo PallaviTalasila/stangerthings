@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import EditPost from "./EditPost";
-import { fetchDelete } from "../../api";
-import swal from "sweetalert";
-import Drawer from "@material-ui/core/Drawer";
+import React from "react";
 
 const Post = (props) => {
   const { post, onChange } = props;

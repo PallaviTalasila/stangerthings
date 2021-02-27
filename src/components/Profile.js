@@ -24,7 +24,7 @@ const Profile = ({
           }
         );
         const data = await response.json();
-        console.log(data.data.messages)
+
         setMyMessages(data.data.messages);
         setMyPosts(data.data.posts);
       } catch (error) {

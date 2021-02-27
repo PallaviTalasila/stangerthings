@@ -7,16 +7,17 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Auth from "./auth";
 
 const App = () => {
-  const [username, setUsername] = useState("");
+  const loginKey = localStorage.getItem(`Token`);
+  const userNameKey = localStorage.getItem(`Username`);
+  const [username, setUsername] = useState(userNameKey ? userNameKey : '');
   const [password, setPassword] = useState("");
-  const [userToken, setUserToken] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [userToken, setUserToken] = useState(loginKey ? loginKey : false);
+  const [loggedIn, setLoggedIn] = useState(loginKey ? true : false);
   const [message, setMessage] = useState("");
   const [postId, setPostId] = useState("");
   const [myMessages, setMyMessages] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [posts, setPosts] = useState([]);
-
   const [state, setState] = useState({});
 
   return (
@@ -94,7 +95,14 @@ const App = () => {
               )}
             />
 
-            <Route path="/" component={Home} />
+            <Route path="/"  
+            render={(props) => (
+                <Home
+                  {...props}
+                  username={username}
+                  loggedIn={loggedIn}
+                />
+              )} />
           </Switch>
         </Router>
       </div>
