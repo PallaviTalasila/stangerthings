@@ -215,7 +215,7 @@ const ViewPosts = (props) => {
                         setPosts={setPosts}
                         loggedIn={loggedIn}
                         userToken={userToken}
-                        toggleDrawer={toggleDrawer}
+                        
                       />
                     ) : (
                       <Post
