@@ -14,7 +14,7 @@ const EditPost = (props) => {
     e.preventDefault();
 
     try {
-       await fetchEditPost(
+      await fetchEditPost(
         postId,
         userToken,
         title,
@@ -61,30 +61,48 @@ const EditPost = (props) => {
       <div className="form-style-8">
         <h2>Edit Post</h2>
         <form>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input
-            type="text"
-            name="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <input
-            type="text"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
+          <lable style={{ color: "#3f51b5", fontStyle: "bold" ,fontWeight: 500 }}>
+            Title
+            <input
+              type="text"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </lable>
+          <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+            Description
+            <input
+              type="text"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </lable>
+          <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+            Price
+            <input
+              type="text"
+              name="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </lable>
+          <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+            Location
+            <input
+              type="text"
+              name="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </lable>
           <label>
             <input
               type="checkbox"
@@ -92,12 +110,14 @@ const EditPost = (props) => {
               value={deliver}
               onChange={(e) => setDeliver(e.target.value.trim())}
             />
-            <span style={{paddingLeft:"10px", fontWeight: "900" }}>Willing to Deliver?</span>
+            <span style={{color: "#3f51b5", paddingLeft: "10px", fontWeight: "500" }}>
+              Willing to Deliver?
+            </span>
           </label>
-          <div style={{marginTop:'10px'}}>
+          <div style={{ marginTop: "10px" }}>
             <button onClick={handleSave}>Save</button>
-            <span style={{marginLeft:'5px'}}>
-            <button onClick={handleDelete}>Delete</button>
+            <span style={{ marginLeft: "5px" }}>
+              <button onClick={handleDelete}>Delete</button>
             </span>
           </div>
         </form>

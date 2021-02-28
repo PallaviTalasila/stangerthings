@@ -2,45 +2,63 @@ import React from "react";
 
 const Post = (props) => {
   const { post, onChange } = props;
-  const { title, description, price, location, deliver} = post;
+  const { title, description, price, location, deliver } = post;
   const nothing = () => {};
 
   return (
     <div className="form-style-8">
       <h2>Post</h2>
-      <form >
+
+      <form>
+      <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+            Title
         <input
           type="text"
           name="title"
-          placeholder="Title"
           value={title}
           readOnly={!!title}
           onChange={title ? nothing : onChange}
         />
+        </lable>
+        <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+           Description
+
         <input
           type="text"
           name="description"
-          placeholder="Description"
           value={description}
           readOnly={!!description}
           onChange={description ? nothing : onChange}
-        />
+        /></lable>
+        <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+           Price
+
         <input
           type="text"
           name="price"
-          placeholder="Price"
           value={price}
           readOnly={!!price}
           onChange={price ? nothing : onChange}
-        />
+        /></lable>
+        <lable
+            style={{ color: "#3f51b5", fontStyle: "bold", fontWeight: 500 }}
+          >
+            Location
+
         <input
           type="text"
           name="location"
-          placeholder="Location"
           value={location}
           readOnly={!!location}
           onChange={location ? nothing : onChange}
         />
+        </lable>
         <label>
           <input
             type="checkbox"
@@ -50,7 +68,9 @@ const Post = (props) => {
             disabled={!!deliver}
             onChange={deliver ? nothing : onChange}
           />
-          <span style={{ paddingLeft: "10px", fontWeight: "900"  }}>Willing to Deliver?</span>
+          <span style={{ color: "#3f51b5",paddingLeft: "10px", fontWeight: "500" }}>
+            Willing to Deliver?
+          </span>
         </label>
       </form>
     </div>
