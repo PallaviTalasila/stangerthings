@@ -77,12 +77,12 @@ const AddPost = (props) => {
               checked={formData.deliver}
               onChange={handleChange}
             />
-            <span style={{ paddingLeft: "10px", fontWeight: "900" }}>
+            <span style={{ paddingLeft: "10px", fontWeight: "500" }}>
               Willing to Deliver?
             </span>
           </label>
 
-          <div>
+          <div style={{marginTop:'10px'}}>
             <button onClick={handleSubmit}>Submit</button>
           </div>
         </form>
