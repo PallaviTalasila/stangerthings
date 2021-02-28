@@ -1,5 +1,3 @@
-import swal from "sweetalert";
-
 const BASE_URL = "https://strangers-things.herokuapp.com";
 const COHORT_NAME = "2010-unf-rm-web-pt";
 
@@ -132,7 +130,6 @@ export async function fetchEditPost(
     const data = await response.json();
     return data;
   } catch (error) {
-    swal("Failed to Edit Post");
     throw error;
   }
 }

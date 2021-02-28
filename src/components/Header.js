@@ -3,14 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    fontFamily: "Open Sans Condensed, sans-serif",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     color: "white",
-    fontSize: "18px",
+    fontSize: "20px",
     marginTop: "0",
     padding: "8px",
     display: "flex",
@@ -26,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header({
-  username,
   setUsername,
   setPassword,
   loggedIn,
@@ -46,7 +44,7 @@ export default function Header({
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="absolute">
       <Toolbar className={classes.root}>
         Stranger's Things
         <Link className={classes.linkColor} to="/">
