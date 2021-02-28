@@ -189,7 +189,7 @@ export default function SimpleTabs({
                 <AccordionActions>
                   <Button
                     size="small"
-                    color="primary"
+                    style={{color:"white"}}
                     onClick={toggleDrawer(messages.post._id, true)}
                   >
                     Send Message
