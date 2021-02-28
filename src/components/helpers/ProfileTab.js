@@ -53,8 +53,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
   },
-  items:{borderRadius:"10px",marginBottom:'10px',backgroundColor:	"#e6ebff"},
- 
+  items: {
+    borderRadius: "10px",
+    marginBottom: "10px",
+    backgroundColor: "#e6ebff",
+  },
+
   expandedPanel: {
     backgroundColor: theme.palette.primary.main,
     color: "white !important",
@@ -100,12 +104,12 @@ export default function SimpleTabs({
         alignItems: "center",
       }}
     >
-      <AppBar position="realtive">
+      <AppBar position="relative">
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
-          indicatorColor="white"
+          indicatorColor="primary"
         >
           <Tab label="Messages from me" {...a11yProps(0)} />
           <Tab label="Messages to me" {...a11yProps(1)} />
@@ -123,7 +127,7 @@ export default function SimpleTabs({
                   classes={{ expanded: classes.expandedPanel }}
                 >
                   <div>
-                    <Typography className={classes.heading}>
+                    <Typography className={classes.heading}  >
                       <strong>Sent by me:</strong> {messages.fromUser.username}
                     </Typography>
                   </div>
@@ -155,7 +159,7 @@ export default function SimpleTabs({
         {myMessages.map((messages) => {
           if (messages.fromUser.username !== username) {
             return (
-              <Accordion key={messages._id}>
+              <Accordion key={messages._id} className={classes.items}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1c-content"

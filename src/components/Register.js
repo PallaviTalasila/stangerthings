@@ -84,8 +84,10 @@ const Register = ({
             Submit
           </button>
         </form>
+        <div style={{marginTop:'10px'}}>
         <label>Already have an account? </label>
         <Link to="/login">Sign in here.</Link>
+        </div>
       </div>
     );
   }

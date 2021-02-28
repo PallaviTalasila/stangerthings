@@ -60,12 +60,14 @@ const Login = ({
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-          <button type="submit" className="btn">
+          <button type="submit">
             Submit
           </button>
         </form>
+        <div style={{marginTop:'10px'}}>
         <label>Don't have an account? </label>
         <Link to="/register">Sign up Here</Link>
+        </div>
       </div>
     );
   }
